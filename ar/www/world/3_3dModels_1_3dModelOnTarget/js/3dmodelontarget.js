@@ -14,7 +14,7 @@ ClientTracker.prototype.init = function() {
   var that = this;
 
   that.arTracker = new AR.ClientTracker(that.tracker, {
-    // onLoaded: that.loadingStep
+    onLoaded: function() {}
   });
 
   for (var drawables, i = 0; i < that.pois.length; i++) {
@@ -81,6 +81,9 @@ var World = {
         offsetY: 0
       }
     }, {
+      name: 'Awards',
+      image: 'images/Overlays/Award Overlay.png'
+    }, {
       name: 'Corner2',
       image: 'images/Overlays/Award Overlay.png'
     }, {
@@ -101,6 +104,15 @@ var World = {
         zOrder: 2,
         onClick: function(model) {
             $('.info').slideToggle();
+            $('.info .capture').one('click', function() {
+              var button = $(this);
+              button.html('Adding car to garage...');
+              setTimeout(function() {
+                button.html('Car added to garage').one('click', function() {
+                  $('.info').slideToggle();
+                });
+              }, 3000);
+            });
           }
           // },
           // showAnim: function(model) {
@@ -128,7 +140,7 @@ var World = {
         zOrder: 1
       }
     }];
-    var clientTracker = new ClientTracker('assets/tracker1.wtc', pois);
+    var clientTracker = new ClientTracker('assets/tracker2.wtc', pois);
   },
 };
 
