@@ -7,10 +7,10 @@
         "files": {}
     },
     "installed_plugins": {
-        "cordova-plugin-whitelist": {
+        "com.wikitude.phonegap.WikitudePlugin": {
             "PACKAGE_NAME": "com.wikitude.phonegapsamples"
         },
-        "com.wikitude.phonegap.WikitudePlugin": {
+        "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.wikitude.phonegapsamples"
         }
     },
