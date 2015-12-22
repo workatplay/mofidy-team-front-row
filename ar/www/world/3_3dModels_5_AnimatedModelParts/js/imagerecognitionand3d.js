@@ -13,7 +13,7 @@ var World = {
 			Important: If you replace the tracker file with your own, make sure to change the target name accordingly.
 			Use a specific target name to respond only to a certain target or use a wildcard to respond to any or a certain group of targets.
 		*/
-		this.tracker = new AR.Tracker("assets/tracker.wtc", {
+		this.tracker = new AR.Tracker("assets/tracker2.wtc", {
 			onLoaded: this.loadingStep
 		});
 
@@ -32,9 +32,9 @@ var World = {
 				Inside the toggleAnimateModel() function, it is checked if the animation is running and decided if it should be started, resumed or paused.
 			*/
 			scale: {
-				x: 0.5,
-				y: 0.5,
-				z: 0.5
+				x: 1,
+				y: 1,
+				z: 1
 			},
 			translate: {
 				x: 0.0,
