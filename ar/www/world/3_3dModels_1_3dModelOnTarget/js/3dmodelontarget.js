@@ -25,8 +25,8 @@ ClientTracker.prototype.init = function() {
       drawables.cam = [that.arModels[i]];
     }
     if (that.pois[i].image) {
-      that.arModels[i] = new AR.ImageResource(that.pois[i].image);
-      drawables.cam = new AR.ImageDrawable(that.arModels[i], 1, that.pois[i].prop);
+      that.arModels[i] = new AR.ImageDrawable(new AR.ImageResource(that.pois[i].image), 1, that.pois[i].prop);
+      drawables.cam = that.arModels[i];
     }
 
     if (that.pois[i].showAnim) {
@@ -64,48 +64,30 @@ ClientTracker.prototype.loadingStep = function() {
   }
 };
 
-
-ClientTracker.prototype.log = function(str) {
-  if (!this.loaded && this.arTracker.isLoaded() && this.arModel.isLoaded()) {
-    document.getElementById('loadingMessage').innerHTML = str;
-  }
-};
-
 var World = {
   init: function initFn() {
     var pois = [{
-      name: 'Alarm',
+      name: 'Corner1',
       image: 'images/Overlays/Alarm Overlay.png',
       prop: {
         offsetX: -0.15,
         offsetY: 0
       }
     }, {
-      name: 'Awards',
+      name: 'Alarm8',
+      image: 'images/Overlays/Alarm Overlay.png',
+      prop: {
+        offsetX: -0.15,
+        offsetY: 0
+      }
+    }, {
+      name: 'Corner2',
       image: 'images/Overlays/Award Overlay.png'
     }, {
-      name: 'RedChair',
+      name: 'Corner3',
       image: 'images/Overlays/Chair Overlay.png'
     }, {
-      name: 'RedChair23',
-      image: 'images/Overlays/Chair Overlay.png'
-    }, {
-      name: 'RedChair22',
-      image: 'images/Overlays/Chair Overlay.png'
-    }, {
-      name: 'RedChair21',
-      image: 'images/Overlays/Chair Overlay.png'
-    }, {
-      name: 'RedChair18',
-      image: 'images/Overlays/Chair Overlay.png'
-    }, {
-      name: 'RedChair17',
-      image: 'images/Overlays/Chair Overlay.png'
-    }, {
-      name: 'RedChair15',
-      image: 'images/Overlays/Chair Overlay.png'
-    }, {
-      name: 'Tree',
+      name: 'Corner4',
       image: 'images/Overlays/Tree Overlay.png'
     }, {
       name: 'Door',
@@ -117,19 +99,17 @@ var World = {
         offsetX: 0,
         offsetY: 1,
         zOrder: 2,
-        onClick: function() {
-          $('.info').toggleClass('in');
-        }
-      // },
-      // showAnim: function(model) {
-      //   $('.info').slideToggle();
-      //   return new AR.PropertyAnimation(model, "offsetY", 2, 1, 500);
+        onClick: function(model) {
+            $('.info').slideToggle();
+          }
+          // },
+          // showAnim: function(model) {
+          //   return new AR.PropertyAnimation(model, "offsetY", 3, 1, 3000);
       }
     }, {
       name: 'Palettes',
       model: 'assets/car.wt3',
       prop: {
-        // onLoaded: this.loadingStep,
         scale: {
           x: 0.1,
           y: 0.1,
@@ -145,11 +125,7 @@ var World = {
           heading: 60,
           tilt: -10
         },
-        zOrder: 1,
-        onClick: function() {
-          // var anim = new AR.PropertyAnimation(clientTracker.arModels[pois.length-1], "rotate.tilt", -25, 335, 10000);
-          // anim.start();
-        }
+        zOrder: 1
       }
     }];
     var clientTracker = new ClientTracker('assets/tracker1.wtc', pois);
