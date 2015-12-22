@@ -34,23 +34,20 @@
 		<script type="text/javascript" src="cordova.js"></script>
 		<script type="text/javascript" src="js/sampleIndices.js"></script>
 		<script type="text/javascript" src="js/loadingPoisFromApplicationModel.js"></script>
-		<script type="text/javascript" src="js/index.js"></script>
 
 		<div data-role="page" id="page1" style="background: none;">
 			<div class="container">
-                <img src="img/SplashScreen.scale-400.png"/>
-                <h2>The Hunt</h2>
+                <img src="img/SplashScreen.scale-400.png" id="logo"/>
+                <img src="img/loader.gif" id="loading-indicator" />
             </div>
-            <footer>
-                <div class="button">Start hunting</div>
-            </footer>
 		</div>
 
+		<script type="text/javascript" src="js/index.js"></script>
 		<script type="text/javascript">
 
-		$( ".button" ).bind( "click", function(event, ui) {
+		setTimeout(function() {
 			app.loadARchitectWorld(getSamplePath(2, 0));
-		});
+		}, 8000);
 		</script>
 	</body>
 </html>
