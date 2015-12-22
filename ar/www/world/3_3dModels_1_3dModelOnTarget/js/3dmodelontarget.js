@@ -4,30 +4,58 @@ var ClientTracker = function(tracker, pois) {
   this.tracker = tracker;
   this.pois = pois;
   this.arModels = [];
+  this.showAnims = [];
   this.trackables = [];
 
   this.init();
 };
 
 ClientTracker.prototype.init = function() {
-  this.arTracker = new AR.ClientTracker(this.tracker, {
-    // onLoaded: this.loadingStep
+  var that = this;
+
+  that.arTracker = new AR.ClientTracker(that.tracker, {
+    // onLoaded: that.loadingStep
   });
 
-  for (var drawables, i = 0; i < this.pois.length; i++) {
+  for (var drawables, i = 0; i < that.pois.length; i++) {
     drawables = {};
 
-    if (this.pois[i].model) {
-      drawables.cam = [new AR.Model(this.pois[i].model, this.pois[i].prop)];
+    if (that.pois[i].model) {
+      that.arModels[i] = new AR.Model(that.pois[i].model, that.pois[i].prop);
+      drawables.cam = [that.arModels[i]];
     }
-    if (this.pois[i].image) {
-      drawables.cam = new AR.ImageDrawable(new AR.ImageResource(this.pois[i].image), 1, this.pois[i].prop);
+    if (that.pois[i].image) {
+      that.arModels[i] = new AR.ImageResource(that.pois[i].image);
+      drawables.cam = new AR.ImageDrawable(that.arModels[i], 1, that.pois[i].prop);
     }
 
-    this.trackables[i] = new AR.Trackable2DObject(this.arTracker, this.pois[i].name, {
-      drawables: drawables
+    if (that.pois[i].showAnim) {
+      that.showAnims[i] = that.pois[i].showAnim(that.arModels[i]);
+    }
+
+    that.trackables[i] = new AR.Trackable2DObject(that.arTracker, that.pois[i].name, {
+      drawables: drawables,
+      onEnterFieldOfVision: function() {
+        if (that.showAnims[i] && !that.showAnims[i].isRunning()) {
+          that.showAnims[i].start();
+        }
+      }
     });
   }
+};
+
+ClientTracker.prototype.appearingAnimation = function(model, scale) {
+  var sx = new AR.PropertyAnimation(model, "scale.x", 0, scale, 1500, {
+    type: AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC
+  });
+  var sy = new AR.PropertyAnimation(model, "scale.y", 0, scale, 1500, {
+    type: AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC
+  });
+  var sz = new AR.PropertyAnimation(model, "scale.z", 0, scale, 1500, {
+    type: AR.CONST.EASING_CURVE_TYPE.EASE_OUT_ELASTIC
+  });
+
+  return new AR.AnimationGroup(AR.CONST.ANIMATION_GROUP_TYPE.PARALLEL, [sx, sy, sz]);
 };
 
 ClientTracker.prototype.loadingStep = function() {
@@ -45,7 +73,7 @@ ClientTracker.prototype.log = function(str) {
 
 var World = {
   init: function initFn() {
-    new ClientTracker('assets/tracker.wtc', [{
+    var pois = [{
       name: 'Alarm',
       image: 'images/Overlays/Alarm Overlay.png',
       prop: {
@@ -59,13 +87,46 @@ var World = {
       name: 'RedChair',
       image: 'images/Overlays/Chair Overlay.png'
     }, {
+      name: 'RedChair23',
+      image: 'images/Overlays/Chair Overlay.png'
+    }, {
+      name: 'RedChair22',
+      image: 'images/Overlays/Chair Overlay.png'
+    }, {
+      name: 'RedChair21',
+      image: 'images/Overlays/Chair Overlay.png'
+    }, {
+      name: 'RedChair18',
+      image: 'images/Overlays/Chair Overlay.png'
+    }, {
+      name: 'RedChair17',
+      image: 'images/Overlays/Chair Overlay.png'
+    }, {
+      name: 'RedChair15',
+      image: 'images/Overlays/Chair Overlay.png'
+    }, {
       name: 'Tree',
       image: 'images/Overlays/Tree Overlay.png'
     }, {
       name: 'Door',
       image: 'images/Overlays/Door Overlay.png'
     }, {
-      name: 'Car',
+      name: 'Palettes',
+      image: 'images/Overlays/pin.png',
+      prop: {
+        offsetX: 0,
+        offsetY: 1,
+        zOrder: 2,
+        onClick: function() {
+          $('.info').toggleClass('in');
+        }
+      // },
+      // showAnim: function(model) {
+      //   $('.info').slideToggle();
+      //   return new AR.PropertyAnimation(model, "offsetY", 2, 1, 500);
+      }
+    }, {
+      name: 'Palettes',
       model: 'assets/car.wt3',
       prop: {
         // onLoaded: this.loadingStep,
@@ -83,9 +144,15 @@ var World = {
           roll: 90,
           heading: 60,
           tilt: -10
+        },
+        zOrder: 1,
+        onClick: function() {
+          // var anim = new AR.PropertyAnimation(clientTracker.arModels[pois.length-1], "rotate.tilt", -25, 335, 10000);
+          // anim.start();
         }
       }
-    }]);
+    }];
+    var clientTracker = new ClientTracker('assets/tracker1.wtc', pois);
   },
 };
 
