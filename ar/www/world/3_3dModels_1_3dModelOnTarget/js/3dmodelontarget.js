@@ -21,9 +21,9 @@ ClientTracker.prototype.init = function() {
       drawables.cam = [new AR.Model(this.pois[i].model, {
         // onLoaded: this.loadingStep,
         scale: {
-          x: 0.045,
-          y: 0.045,
-          z: 0.045
+          x: 0.1,
+          y: 0.1,
+          z: 0.1
         },
         translate: {
           x: 0.0,
@@ -31,7 +31,7 @@ ClientTracker.prototype.init = function() {
           z: 0.0
         },
         rotate: {
-          roll: -25
+          roll: 0
         }
       })];
     }
@@ -64,16 +64,22 @@ ClientTracker.prototype.log = function(str) {
 var World = {
   init: function initFn() {
     new ClientTracker('assets/tracker.wtc', [{
+      name: 'Alarm',
+      image: 'images/Overlays/Alarm Overlay.png'
+    }, {
+      name: 'Awards',
+      image: 'images/Overlays/Award Overlay.png'
+    }, {
       name: 'RedChair',
       image: 'images/Overlays/Chair Overlay.png'
     }, {
       name: 'Tree',
       image: 'images/Overlays/Tree Overlay.png'
-    // }, {
-    //   name: 'DSC_0273',
-    //   model: 'assets/car.wt3'
     }, {
-      name: 'Palletes',
+      name: 'Door',
+      image: 'images/Overlays/Door Overlay.png'
+    }, {
+      name: 'Car',
       model: 'assets/car.wt3'
     }]);
   },
