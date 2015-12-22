@@ -18,22 +18,7 @@ ClientTracker.prototype.init = function() {
     drawables = {};
 
     if (this.pois[i].model) {
-      drawables.cam = [new AR.Model(this.pois[i].model, {
-        // onLoaded: this.loadingStep,
-        scale: {
-          x: 0.1,
-          y: 0.1,
-          z: 0.1
-        },
-        translate: {
-          x: 0.0,
-          y: 0.05,
-          z: 0.0
-        },
-        rotate: {
-          roll: 0
-        }
-      })];
+      drawables.cam = [new AR.Model(this.pois[i].model, this.pois[i].prop)];
     }
     if (this.pois[i].image) {
       drawables.cam = new AR.ImageDrawable(new AR.ImageResource(this.pois[i].image), 1, {
@@ -80,7 +65,25 @@ var World = {
       image: 'images/Overlays/Door Overlay.png'
     }, {
       name: 'Car',
-      model: 'assets/car.wt3'
+      model: 'assets/car.wt3',
+      prop: {
+        // onLoaded: this.loadingStep,
+        scale: {
+          x: 0.1,
+          y: 0.1,
+          z: 0.1
+        },
+        translate: {
+          x: 0.0,
+          y: 0.05,
+          z: 0.0
+        },
+        rotate: {
+          roll: 90,
+          heading: 60,
+          tilt: -10
+        }
+      }
     }]);
   },
 };
