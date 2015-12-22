@@ -35,6 +35,20 @@ var app = {
     // deviceready Event Handler
     onDeviceReady: function() {
         app.wikitudePlugin = cordova.require("com.wikitude.phonegap.WikitudePlugin.WikitudePlugin");
+
+        var push = PushNotification.init({
+            "android": {
+                "senderID": "1062248528391"
+            },
+            "ios": {"alert": "true", "badge": "true", "sound": "true"},
+            "windows": {}
+        });
+
+        // push.on('registration', function(data) {
+        //     console.log("registration event");
+        //     document.getElementById("regId").innerHTML = data.registrationId;
+        //     console.log(JSON.stringify(data));
+        // });
     },
     // --- Wikitude Plugin ---
     // Use this method to load a specific ARchitect World from either the local file system or a remote server
@@ -48,7 +62,7 @@ var app = {
             }
 
             app.wikitudePlugin.loadARchitectWorld(function successFn(loadedURL) {
-                /* Respond to successful world loading if you need to */ 
+                /* Respond to successful world loading if you need to */
             }, function errorFn(error) {
                 alert('Loading AR web view failed: ' + error);
             },
@@ -62,7 +76,7 @@ var app = {
     },
     urlLauncher: function(url) {
         var world = {
-            "path": url, 
+            "path": url,
             "requiredFeatures": [
                 "2d_tracking",
                 "geo"
@@ -79,9 +93,9 @@ var app = {
             app.wikitudePlugin.captureScreen(
                 function(absoluteFilePath) {
                     alert("snapshot stored at:\n" + absoluteFilePath);
-                }, 
+                },
                 function (errorMessage) {
-                    alert(errorMessage);                
+                    alert(errorMessage);
                 },
                 true, null
             );

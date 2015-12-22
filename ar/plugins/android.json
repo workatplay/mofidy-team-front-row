@@ -12,6 +12,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.wikitude.phonegapsamples"
+        },
+        "phonegap-plugin-push": {
+            "PACKAGE_NAME": "com.wikitude.phonegapsamples"
         }
     },
     "dependent_plugins": {}
