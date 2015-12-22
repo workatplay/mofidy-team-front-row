@@ -21,10 +21,7 @@ ClientTracker.prototype.init = function() {
       drawables.cam = [new AR.Model(this.pois[i].model, this.pois[i].prop)];
     }
     if (this.pois[i].image) {
-      drawables.cam = new AR.ImageDrawable(new AR.ImageResource(this.pois[i].image), 1, {
-        offsetX: -0.15,
-        offsetY: 0
-      });
+      drawables.cam = new AR.ImageDrawable(new AR.ImageResource(this.pois[i].image), 1, this.pois[i].prop);
     }
 
     this.trackables[i] = new AR.Trackable2DObject(this.arTracker, this.pois[i].name, {
@@ -50,7 +47,11 @@ var World = {
   init: function initFn() {
     new ClientTracker('assets/tracker.wtc', [{
       name: 'Alarm',
-      image: 'images/Overlays/Alarm Overlay.png'
+      image: 'images/Overlays/Alarm Overlay.png',
+      prop: {
+        offsetX: -0.15,
+        offsetY: 0
+      }
     }, {
       name: 'Awards',
       image: 'images/Overlays/Award Overlay.png'
