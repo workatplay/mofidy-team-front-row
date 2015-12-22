@@ -10,7 +10,7 @@
   position: absolute;
   z-index: 100;
   overflow: scroll;
-  /*display: none;*/ }
+  display: none; }
   .info .hero {
     margin: 0 auto;
     width: 80%;
